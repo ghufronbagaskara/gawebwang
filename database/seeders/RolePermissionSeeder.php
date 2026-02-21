@@ -47,7 +47,7 @@ class RolePermissionSeeder extends Seeder {
     $clientRole->syncPermissions($clientPermissions);
 
     $frealancerRole = Role::firstOrCreate([
-      'name' => 'project_frealancer'
+      'name' => 'project_freelancer'
     ]);
     $frealancerPermissions = [
       'apply job',
