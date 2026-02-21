@@ -20,11 +20,11 @@ return new class extends Migration {
       $table->unsignedBigInteger('budget');
       $table->unsignedBigInteger('client_id');
       $table->boolean('has_started');
-      $table->boolean('has_finished]');
+      $table->boolean('has_finished');
       $table->softDeletes();
       $table->timestamps();
 
-      $table->foreignId('client_id')->references('id')->on('users')->onDelete('cascade');
+      $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
     });
   }
 
