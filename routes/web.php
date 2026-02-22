@@ -11,9 +11,9 @@ use App\Http\Controllers\ToolController;
 use App\Http\Controllers\WalletTransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-  return view('welcome');
-});
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/category/{category:slug}', [FrontController::class, 'category'])->name('front.category');
+Route::get('/details/{project:slug}', [FrontController::class, 'details'])->name('front.details');
 
 Route::get('/dashboard', function () {
   return view('dashboard');
@@ -52,10 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/apply/{project:slug}', [FrontController::class, 'apply_job'])
       ->name('front.apply_job');
 
-    Route::get('/apply/{project:slug}/submit', [FrontController::class, 'apply_job_store'])
+    Route::post('/apply/{project:slug}/submit', [FrontController::class, 'apply_job_store'])
       ->name('front.apply_job.store');
 
-    Route::post('/dashboard/proposals', [DashboardController::class, 'proposals'])
+    Route::get('/dashboard/proposals', [DashboardController::class, 'proposals'])
       ->name('dashboard.proposals');
 
     Route::post('/dashboard/proposals_details/{project}/{projectApplicant}', [DashboardController::class, 'proposal_details'])
@@ -84,12 +84,12 @@ Route::middleware('auth')->group(function () {
         ->name('complete_project.store');
 
       Route::get('/project/{project}/tools', [ProjectController::class, 'tools'])
-        ->name('project.tools');
+        ->name('projects.tools');
 
       Route::post('/project/{project}/tools/store', [ProjectController::class, 'tools_store'])
-        ->name('project.tools.store');
+        ->name('projects.tools.store');
 
-      Route::resource('tools', ProjectToolController::class);
+      Route::resource('project_tools', ProjectToolController::class);
     });
 
     Route::middleware('can:manage categories')->group(function () {
